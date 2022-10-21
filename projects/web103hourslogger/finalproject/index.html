@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
+</head>
+<body>
+    <header>
+        <h2>Welcome to the Hour Logger</h2>
+        <h3>Where you can log all of your hours</h3>
+    </header>
+
+    <div id="jobs">
+    <p>Input your job here, add up to 6 jobs</p>
+    <input placeholder="enter job here" id="jobTitle">
+    <button onclick="createJob()">Add a new Job</button>
+    </div>
+
+    <div id="wrapper"></div>
+    
+</body>
+
+<script>
+
+
+//Features I want to add 
+//delete job function: delete item out of local storage, then delete the html --- needs some debugging
+//date and time function: add date and time as a property which is added simultaniously with hour logger
+//work description function: add option to input note  - description of the work - to be stored as a propety simultaniously with hours
+//print total hours function:  prints the log of inputs - date: hours, description
+//timer function: start and stop timer which would then be logged to hours
+
+function createJobTitle(id, container) {
+        job = document.createElement("h1");         
+        job.innerText = (jobName);
+        job.className = count;
+        document.body.appendChild(job);
+        newDiv.appendChild(job);
+        wrapper.appendChild(newDiv);
+}
+
+function createInputBox(count, newDiv) {
+        var newInput = document.createElement("input");
+        newInput.className = count;
+        newInput.placeholder = "hours";
+        document.body.appendChild(newInput);
+        newDiv.appendChild(newInput);
+        wrapper.appendChild(newDiv);
+}
+
+
+function createLogHoursButton(id, container) {
+        logButton = document.createElement("button") ;
+        logButton.innerText = "Log Hours";
+        logButton.className = id;
+        logButton.addEventListener("click", function() { logHours(id) } );
+        document.body.appendChild(logButton);
+        container.appendChild(logButton);
+        wrapper.appendChild(container);  
+}
+
+function createTotalHoursButton(id, container) {
+        totalButton = document.createElement("button");
+        totalButton.className = id;
+        totalButton.innerText="Total Hours";
+        totalButton.addEventListener("click", function() { totalHours(id, newDiv) } );
+        document.body.appendChild(totalButton);
+        container.appendChild(totalButton);
+        wrapper.appendChild(container);
+}
+
+function createResetHoursButton(id, container){
+        resetButton = document.createElement("button");
+        resetButton.className = id;
+        resetButton.innerText="Reset Hours";
+        resetButton.addEventListener("click", function() { resetHours(id) } );
+        document.body.appendChild(resetButton);
+        container.appendChild(resetButton);
+        wrapper.appendChild(container);
+}
+
+// function createDeleteJobButton(id, container){
+//         deleteButton = document.createElement("button");
+//         deleteButton.className = id;
+//         deleteButton.innerText="Delete Job";
+//         deleteButton.addEventListener("click", function() { deleteJob(id) } );
+//         document.body.appendChild(deleteButton);
+//         container.appendChild(deleteButton);
+//         wrapper.appendChild(container);
+// }
+
+
+////sets the count at the last post in storage
+count = Object.keys(localStorage).length      
+
+//this function creates a new job, buttons, and stores it all as an object in local storage
+    function createJob(){
+
+        //assigns text from the input 
+        jobName = document.getElementById("jobTitle").value;    
+
+        //only if the input is not empty and limit number of jobs
+        if(jobName !='' && count <10){   
+        count++; 
+
+        //new div for each job
+        newDiv = document.createElement("div");
+
+        //create a new headline
+        createJobTitle(count, newDiv)
+        
+        //create new input box
+        createInputBox(count, newDiv)
+        
+        //create log hours button and call function
+        createLogHoursButton(count, newDiv);
+
+        //create total hours button and call function
+        createTotalHoursButton(count, newDiv);
+
+        //create reset button and call function
+        createResetHoursButton(count, newDiv);
+
+        // //create delete button and call function
+        // createDeleteJobButton(count, newDiv);
+
+        //create the object
+        let jobObject = {
+            title: jobName,
+            hours: []
+        }
+
+        //store object to local storage
+        localStorage.setItem(count, JSON.stringify(jobObject));
+
+        //clear input box
+        document.getElementById("jobTitle").value = "";
+        }
+    }
+
+    // this function retieves the stored jobs and recreates them on page load
+        function retrieveJob(){
+            var items = Object.keys(localStorage);          //returns an array of numbers that represents how many items are stored in local storage
+            var total = items.length;                       //length of array / number of items
+           
+            //run a loop to bring back job titles and inputs on load
+            for(i=1; i<=total; i++){
+
+                newDiv = document.createElement("div");
+
+                //create a new html tag, retrieve data from local storage and add to page
+                let storedJobs = document.createElement('h1');
+                storedJobs.className = i;
+                let data = localStorage.getItem(i);
+                let output = JSON.parse(data);
+                storedJobs.innerText = output.title
+                document.body.appendChild(storedJobs);
+                newDiv.appendChild(storedJobs);
+                wrapper.appendChild(newDiv);
+
+                //recreate input boc
+                createInputBox(i, newDiv)
+                
+                //recreate log hours button
+                createLogHoursButton(i, newDiv);
+
+                //recreate total hours button
+                createTotalHoursButton(i, newDiv);
+
+                //recreate reset button
+                createResetHoursButton(i, newDiv);
+
+                // //recreate delete button
+                // createDeleteJobButton(count, newDiv);
+
+                }
+            }
+
+//call function so job inputs show up on page load
+    retrieveJob()
+
+    //this function grabs the object that is targeted, and stores the inputted hours
+    function logHours(id){
+
+        // if input is not empty , then log hours
+        if(document.getElementsByTagName("input")[id].value != ""){  
+
+            //store input as a value to the variable
+            inputValue = parseFloat(document.getElementsByTagName("input")[id].value);
+
+                //getting item from local storage, and parse (change back to object)
+                let data = localStorage.getItem(id);
+                let output = JSON.parse(data);
+
+                //targetting the array in the object, adding the inputted hours, and updating object to local storage
+                output.hours.push(inputValue);
+                newObj = JSON.stringify(output);
+                localStorage.setItem(id, newObj);
+
+                //clear input box after input is stored
+                document.getElementsByTagName("input")[id].value = "";
+
+        }
+
+    }
+
+    //calculate the total hours stored in the targetted object, onclick returns the class of the button clicked
+    //which is how the function knows which object's array to sum
+    function totalHours(id){
+        
+        //grabs the appropriate array
+        let totalHoursObject = JSON.parse(localStorage.getItem(id));
+        let totalHoursArray = totalHoursObject.hours; 
+
+        //if array is empty alerts empty, else will alert the sum of the array
+        if (totalHoursArray.length == 0){
+            alert("You havent worked any hours!")
+        }
+
+        else {      //accumulate all numbers in aray
+            let sum = totalHoursArray.reduce((acc, curr) => acc + curr);  
+            console.log(sum)  
+
+            //get the name of the job
+            let name = totalHoursObject.title;
+
+            //alert
+            alert("Job: " + name + " -- Hours: " + sum)
+
+            //showHours = document.createElement("p");
+            //showHours.innerText = ("Total Hours at " + name +": " + sum); 
+            // showHours.className = id;
+    
+
+            //containerTest= document.getElementsByTagName('div')[id+1]
+            // document.body.appendChild(showHours);
+            // container.appendChild(showHours);
+            // wrapper.appendChild(container);
+        }
+
+
+    }
+
+
+    //reset stored hours, grab the targetted objects array, empty the array, and update the object with empty array
+    function resetHours(id) {
+        var storedHours = JSON.parse(localStorage.getItem(id));
+        var hoursArray = storedHours.hours;
+        hoursArray.splice(0,hoursArray.length);
+        storeObj = JSON.stringify(storedHours);
+        localStorage.setItem(id, storeObj);
+    }
+
+    // function deleteJob(id) {
+    //     //deletes object from local storage using the returned key
+    //     localStorage.removeItem(id);
+
+    //     length = document.getElementsByClassName(id).length;
+    //     item = document.getElementsByClassName(id);
+        
+    //     //removes all the html tags on the page
+    //     for(i=1; i<=length; i++) {
+    //         item[0].remove();
+
+    //     }
+    // }
+
+
+</script>
+
+</html>

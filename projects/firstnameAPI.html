@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: orange;
+            font-family:Verdana, Geneva, Tahoma, sans-serif;
+            text-align: center;
+        }
+
+        #main {
+            border:black solid 0.4rem;
+            padding:0.5rem;
+        }
+
+        p{
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .nameTag {
+            font-size:3rem;
+            font-weight:bold;
+        }
+
+
+
+    </style>
+</head>
+<body>
+
+    <div id=main>
+    <h1>Enter a first name</h1>
+    <input placeholder="Enter Name" id="name" type=text>
+    <button onclick="countryGuess()">Get Info</button>
+    </div>
+</body>
+</html>
+
+<script>
+
+  
+  // AJAX - asynchornus javascript  and XML
+  
+  //guess country
+  function countryGuess() {
+ 
+  const xhttp = new XMLHttpRequest(); // ajax technology in the browser
+   
+ xhttp.onload = function() { //onload method
+ 
+    let myObject = this.responseText
+ 
+    let info = JSON.parse(myObject)
+
+        let name = document.createElement("p")
+        name.className = "nameTag"
+        name.innerText = (info.name)
+
+        let country1 = (info.country[0].country_id)
+        let country2 = (info.country[1].country_id)
+
+        let nameDiv = document.createElement("div")
+        nameDiv.className = "nameClass"
+        document.body.appendChild(nameDiv)
+        nameDiv.appendChild(name)
+      
+        let firstSentence = document.createElement("p");
+        firstSentence.innerText = (" is from " + country1 + " or " + country2);
+        document.body.appendChild(firstSentence);
+   
+   }
+ 
+    name  = document.getElementById("name").value
+    let url = "https://api.nationalize.io?name=" + name;
+    
+  xhttp.open("GET",url, true); // get request initates
+     
+  xhttp.send();
+
+  setTimeout(ageGuess, 1000)
+  setTimeout(genderGuess, 1000)
+
+}
+
+//guess age
+function ageGuess() {
+ 
+ const xhttp = new XMLHttpRequest(); // ajax technology in the browser
+  
+xhttp.onload = function() { //onload method
+
+   let myObject = this.responseText
+
+   let info = JSON.parse(myObject)
+   
+     name = (info.name)
+     years = (info.age)
+
+     let secondSentence = document.createElement("p");
+     secondSentence.innerText = ("is " + years + " years old");
+     document.body.appendChild(secondSentence);
+  
+  }
+
+   name  = document.getElementById("name").value
+   let url = "https://api.agify.io?name=" + name;
+   
+   
+ xhttp.open("GET",url, true); // get request initates
+    
+ xhttp.send();
+
+}
+
+//gender Guess
+function genderGuess() {
+ 
+ const xhttp = new XMLHttpRequest(); // ajax technology in the browser
+  
+xhttp.onload = function() { //onload method
+
+
+   let myObject = this.responseText
+
+   let info = JSON.parse(myObject)
+   
+     name = (info.name)
+     sex = (info.gender)
+
+     let thirdSentence = document.createElement("p");
+     thirdSentence.innerText = ("the gender is " + sex);
+     document.body.appendChild(thirdSentence);
+  
+  }
+
+   name  = document.getElementById("name").value
+   let url = "https://api.genderize.io?name=" + name;
+   document.getElementById("name").value = ''
+   
+   
+ xhttp.open("GET",url, true); // get request initates
+    
+ xhttp.send();
+
+}
+
+</script>

@@ -1,0 +1,156 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, main, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, main, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* end of Eric Meyer's Reset CSS */
+
+/* make fancier add pictures or something */
+
+
+html{
+
+	height:100vh;
+	width:100vw;
+}
+
+body {
+    
+    background-color:grey;
+    font-family: 'Courier New', Courier, monospace;
+	color:black;
+	width:100vw;
+	margin:auto;
+	text-align:center;
+	font-weight: bold;
+}
+
+header {
+
+	margin:0rem;
+	display:block;
+	width:100vw;
+}
+
+header h2 {
+
+	text-align:center;
+	font-size:3rem;
+	font-weight: bold;
+	padding-bottom:1rem;
+
+}
+
+header h3 {
+
+	text-align:center;
+	font-size:2rem;
+	font-weight:bold;
+	padding-bottom:1rem;
+}
+
+#jobs {
+
+	text-align: center;
+	font-weight: bold;
+	margin-bottom:2rem;
+}
+
+#jobs p, #jobs input, #jobs button {
+	margin-bottom:0.5rem;
+}
+
+#jobTitle {
+	text-align: center;
+}
+
+body h1{  
+
+	font-weight: bold;
+	text-align: center;
+	width:100%;
+}
+
+body p {
+
+	font-weight: bold;
+	text-align: center;
+}
+
+button, input {
+
+	width:50%;
+	font-weight:bold;
+}
+
+
+#wrapper {
+
+	display:flex;
+	flex-direction: row;
+	justify-content:space-around;
+}
+
+#wrapper div {
+
+	display:flex;
+	flex-direction:column;
+}
+
+#wrapper h1 {
+
+	font-size: 2rem;
+}
+
+#wrapper button, #wrapper input {
+
+	width:100%;
+	text-align: center;
+}
