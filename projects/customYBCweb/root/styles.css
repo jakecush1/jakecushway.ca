@@ -1,0 +1,461 @@
+@charset "UTF-8";
+/* CSS Document */
+
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, main, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, main, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* end of Eric Meyer's Reset CSS */
+
+/* start of mobile site */
+
+/* imported a font for header */
+
+@font-face {
+    font-family: 'chunkfiveregular';
+    src: url('chunkfive-regular-webfont.woff2') format('woff2'),
+         url('chunkfive-regular-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+html {
+
+	background-color:burlywood;
+}
+
+/* header styles */
+
+header {
+
+	background-color:burlywood;
+	font-family:chunkfiveregular, arial, "Trebuchet MS", Verdana, sans-serif;
+	color:black;
+	background-image:url(images/ybclogo.png);
+	background-repeat: no-repeat;
+	background-position: top 1rem right 1rem;
+	background-size:60px;
+
+}
+
+header h1 {
+
+	display:flex;
+	flex-direction: column;
+	padding:1rem;
+	font-size: 2rem;
+
+}
+
+header span {
+
+	display:flex;
+	flex-direction: column;
+	padding:1rem 4rem 1rem 1rem;
+	font-size:1rem;
+
+}
+
+/* end of header
+top nav styles */
+
+nav#topnav {
+
+	background-color:black;
+
+}
+
+nav#topnav ul {
+
+	display:block;
+	text-align:center;
+	
+}
+
+nav#topnav ul li {
+
+	padding:1rem 1rem 0 1rem;
+
+}
+
+nav#topnav ul li#lastli {
+
+	padding:1em;
+}
+
+nav#topnav ul li a {
+
+	color:burlywood;
+	text-decoration: none;
+	text-transform: uppercase;
+	transition: font-size 0.7s ease;
+}
+
+
+header nav#topnav ul li a:hover {
+
+
+	font-size:1.5em;
+}
+
+/* End of top nav styles */
+
+/*/start of body styles */
+
+#wrapper {
+
+	background-color:burlywood;
+	font-family:Arial, Helvetica, sans-serif;
+	padding:1rem;
+	letter-spacing: 0.4px;
+}
+
+#wrapper main h1 {
+
+	font-size:2rem;
+	font-weight:bold;
+	text-align:center;
+	padding:0 0 0.8rem 0;
+	display:block;
+
+}
+
+#wrapper main span {
+
+	text-align: center;
+	padding:1rem;
+	display:block;
+	font-size:1.2rem;
+	font-weight:bold;
+}
+
+
+#wrapper p {
+
+	padding-bottom:1rem;
+
+}
+
+#wrapper img {
+
+	display:block;
+	max-width: 100%;
+	max-height:100%;
+	margin:0.2rem;
+
+}
+/* About styles */
+#wrapper main #about h2 {
+
+	padding:1rem;
+	font-weight:bold;
+	
+}
+
+#wrapper main #about figure {
+
+	max-width:100%;
+	height:auto;
+	text-align:center;
+	padding-bottom:1rem;
+
+
+}
+/* end of general body */
+
+
+
+
+/* article styles */
+
+#wrapper main article {
+
+	display:flex;
+	justify-content: center;
+	flex-direction: column;
+	padding:0.5rem;
+	background-color:#e8cc73;
+	border:black solid 0.5rem;
+	margin:0.5rem auto;
+}
+
+#wrapper main article h1 {
+
+	padding:0.5rem;
+}
+
+#wrapper article h2 strong {
+
+	font-weight:bold;
+}
+
+#wrapper main article h2 {
+	padding:0.5rem;
+	display:flex;
+	align-content: flex-start;
+
+}
+
+#wrapper article p {
+
+	text-align:center;
+	padding:1rem 0 1rem 0 ;
+}
+	
+#wrapper article img {
+
+	max-height:500px;
+}
+
+
+#wrapper audio {
+
+	margin: auto;
+	padding-bottom:0.8rem;
+	width:80%;
+}
+
+/* Gallery article styles */
+
+#wrapper #gallery {
+
+	display:flex;
+	flex-wrap: wrap;
+}
+
+#wrapper #gallery article {
+
+	background-color:transparent;
+	border:none;
+	padding:0;
+	max-width:100%;
+}
+/* end of article styles */
+
+
+/* footer */
+
+footer p {
+
+	background-color: black;
+	color: burlywood;
+	text-decoration: none;
+	font-size: 0.7em;
+	padding: 0.8em 0;
+	text-align: center;
+	margin-top:0.5rem;
+	
+
+}
+
+footer ul {
+
+	display:block;
+	padding-top:2rem;
+
+}
+
+footer ul li {
+
+	margin-bottom:0.5rem;
+}
+
+footer ul li a {
+
+	text-decoration:none;
+
+}
+
+
+.apple {
+
+	background-color: burlywood;
+	background-image: url("images/apple.png");
+	background-position: left center ;
+	background-size: 2.3rem;
+	background-repeat: no-repeat;
+	color:black;
+	text-align:center;
+	text-indent: 4rem;
+	font-weight:bold;
+
+}
+
+.spotify {
+
+	background-color: burlywood;
+	background-image: url("images/spotify.png");
+	background-position: left center;
+	background-size: 2.3rem;
+	background-repeat: no-repeat;
+	color:black;
+	text-align:center;
+	text-indent: 4rem;
+	font-weight:bold;
+
+}
+
+.youtube {
+
+	background-color: burlywood;
+	background-image: url("images/youtube.png");
+	background-position: left center;
+	background-size: 2.3rem;
+	background-repeat: no-repeat;
+	color:black;
+	text-align:center;
+	text-indent: 4rem;
+	font-weight:bold;
+
+}
+
+#wrapper main figure {
+	padding-bottom:1rem;
+}
+
+@media only screen and (min-width: 32rem) {
+
+
+
+	nav#topnav ul {
+
+		display:flex;
+		justify-content: space-around;
+		
+}
+
+	nav#topnav ul li {
+
+		padding:1rem;
+
+	}
+
+	#wrapper main #about figure{
+
+		max-width:100%;
+
+		float:right;	
+
+	}
+	#wrapper main figure img {
+
+		max-width:100%;
+		width:40%;
+		margin:1rem auto;
+		text-align: center;
+
+	}
+
+	#wrapper main #articles{
+
+		display:flex;
+		flex-wrap:wrap;
+
+	}
+
+	#articles article {
+
+		max-width:40%;
+	}
+	
+	#wrapper #gallery article {
+
+		max-width:48%;
+	}
+
+
+ /* footer */
+
+	footer {
+		display:block;
+		padding-top:1rem;
+		clear:both;
+	}
+	footer ul {
+		display:flex;
+		justify-content: space-around;
+		margin:auto;
+	}
+	footer ul li {
+
+		padding:0 ;
+	}
+
+	footer ul li p.apple, footer ul li p.youtube, footer ul li p.spotify {
+
+		padding:1rem 0 0 3rem;
+		text-indent:0;
+	}
+
+}
+
+@media only screen and (min-width: 48rem) {
+
+body #wrapper main #articles article {
+
+	width: 420px;
+	margin:8px;
+}
+
+body #wrapper main #articles {
+
+	justify-content: space-around;
+}
+
+#wrapper main figure {
+
+	max-width:100%;
+	width:60%;
+	max-height:80%;
+	float:right;	
+
+
+}
+
+}
