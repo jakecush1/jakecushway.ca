@@ -1,0 +1,75 @@
+html, body {
+    background-color: lavender;
+}
+
+body {
+    text-align:center;
+}
+
+.menu {
+    display:flex;
+    justify-content: space-around;
+    padding:1rem;
+}
+
+.menuwrapper{
+    display:flex;
+    margin:1rem;
+}
+
+#viewCurrentJobs{
+    max-width:80%;
+    margin:1rem auto;
+
+}
+
+.wrapper {
+    margin:1rem;
+    padding:1rem;
+}
+
+#newJob, #viewJobs {
+    max-width: 100%;
+    width:40%;
+    border:solid grey 2px;
+    padding: 20px;
+    margin:auto;
+}
+
+}
+
+#home {
+    height:60px;
+    width:60px;
+
+}
+
+.allJobs {
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.allJobs div {
+
+    width:30%;
+    border:black solid 0.2rem;
+    margin: 0.5rem auto;
+
+}
+
+button {
+    margin:0.2rem;
+}
+
+footer {
+    display:block;
+        position:static;
+        bottom: 10px;
+        width: 100%;
+      
+}
+
+footer a {
+    padding: 0 1rem 0 1rem;
+}

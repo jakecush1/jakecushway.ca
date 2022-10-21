@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track My Hours</title>
+</head>
+<body>
+
+    <!--Criteria
+
+Application Overview / Vision
+
+1) Min of 10 User Stories
+
+2) Include a paragraph on how you intend to make use of the 
+firebase database in your app
+
+3) Web App UI Mochup Using Pencil
+
+4) Web App flow chart with UX function map  (keep in 
+mind the proper use of arrays and objects while panning 
+the function flow chart)-->
+<div class="overview">
+    <h1>App Overview</h1>
+    <p>
+        Track My Hours will be an online webapp, which uses 
+        firebase to store your inputs.  The app will start with an authentication page, where a 
+        user create a profile and will login.  This will then create 
+        a new doc inside of firebase where all the users data 
+        will be stored.  
+    </p> 
+
+    <p>
+        The app is aimed towards people who work remotely, freelancers,
+         and people who work multiple jobs.  This could be used for 
+        Web Devs, or artists; as well as administrators or social media jobs
+        .  This app would benefit both the worker and the customer, 
+        in that it would create a detailed work log.   
+    </p> 
+
+    <p> 
+        Some features that the app will include are a start and stop 
+        timer function, that a user can easily track the exact amount of
+        time spent on each job.  The amount of time will be added to 
+        that job, with a timestamp and the option to add a note describing
+        the work that they had done. 
+    </p> 
+
+</div>    
+        
+<div class="firestore">
+    <h1>FireStore Database</h1>
+        <p>
+            The app will be utilizing Firebase so that different users can create
+             accounts and save their owen personal data to their account.  The use 
+             of Firebase database will also allow the users to access their information 
+             on any device.
+        </p>
+       <p>
+            Inside of Firebase, the collection will be the name of the application:
+             Track My Hours. 
+            Everytime a user registers an email and password, this will 
+            be stored with a unique user ID as a doc inside of the collection. 
+            Stored in the unique user ID document, is where the Jobs and their 
+            corresponding information will be stored. </p>
+            
+        <p>
+            The Job Title will be stored as a map inside of the userID's field.  
+            The data will be stored as an array of objects, with each object containing
+             the data of the users input: Hours logged, Date, Time of day, Note
+
+        <p>
+            From the outside to the inside of Firebase it will be structured as follows:<br>
+             <ul><li> Collection: TrackMyHours -> Doc: UserID -> Field= 
+              JobTitle: [{Length:#, Date:#, Time:#, note:#}, {Length:#, Date:#, 
+                Time:#, note:#}......]</li></ul>
+        </p>
+
+</div>
+
+<dvi class="userStories">
+    <h1>User Stories</h1>
+        <ol>
+            <li>
+                As a user, I want to be able to track my hours on multiple 
+                different projects.
+            </li>
+            
+            <li>
+                As a user, I want to have a start and stop timer for 
+                convinience of track my hours.
+            </li>
+            
+            <li>
+                As a user, I want to be able to add a note everytime I log my hours.
+            </li>
+            
+            <li>
+                As a user, everytime I log hours I want the date to be automatically.
+            </li>
+
+            <li>
+                As a user, I want the time to be saved each time i log my hours.
+            </li>
+
+            <li>
+                As a user, I want to be able to log in and access my data From
+                any device.
+            </li>
+
+            <li>
+                As an employer/customer/contractor, I want to be able to 
+                provide a detailed work log of the hours worked.
+            </li>
+
+            <li>
+                As a custom furniture maker, I want an easy to use app to help
+                me track my hours spent on multiple different pieces I work on, 
+                to help me determine the price I will charge.
+            </li>
+
+            <li>
+                As a carpenter I want an easy to use app that I can log my hours in, 
+                as well as attach a note to each day to determine how long different 
+                jobs take.
+            </li>
+
+            <li>
+                As an owner of a new painting business, i want to be able to track 
+                how long it takes to paint different sizes of houses, prep the houses 
+                and paint the trim and all the other jobs, so i can create more 
+                accurate quotes on new jobs.
+            </li>
+
+            <li>
+                As a web dev, I want an application that will keep an accurate log 
+                of exactly how long i spend working on different websites, as well 
+                as how long different tasks take me so I can provide my clients 
+                with detailed work logs, also so i can track my progression in 
+                effiency.
+            </li>
+
+
+
+        </ol>
+</dvi>
+
+
+
+
+</body>
+</html>
+
