@@ -1,0 +1,31 @@
+
+  <h1>Blog Page</h1>
+    <form method="POST" action="/storeBlog">
+      <input type="text" name="title" placeholder="Title">
+        <input type="text" name="blog" placeholder="BlogPost">
+        <input type="submit" value="Store Post" >
+    </form>
+    <a href="/signout/"><button>Sign out</button></a><br><br><hr>
+
+
+
+
+<% 
+data=object[0].blogposts
+
+// console.log(object)
+console.log(data)
+
+for(i=0;i<data.length; i++){ %>
+  
+<div class="post">
+  <h2> <%= data[i].post %>: </h2>
+  <p> <%= data[i].content %> </p>
+  <form action="delete" method="post">
+  <input type="submit" value="Delete blog">
+  </form>
+  <br><hr>
+
+</div>
+
+<% } %>
