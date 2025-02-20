@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>808 Drum Machine & Synth</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.36/Tone.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: white; }
+        .container { margin: 20px auto; width: 80%; max-width: 900px; background: #333; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(255,255,255,0.2); }
+        .step-grid { display: grid; grid-template-columns: repeat(16, 40px); gap: 5px; justify-content: center; }
+        .step { width: 40px; height: 40px; background: gray; border-radius: 5px; border: 1px solid white; cursor: pointer; }
+        .step.active { background: red; }
+        button { margin: 10px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background: #ff5722; color: white; cursor: pointer; }
+        button:hover { background: #e64a19; }
+        .button-on { background: green !important; }
+        input[type="range"] { width: 200px; margin-top: 10px; }
+        .keyboard { display: flex; justify-content: center; margin-top: 20px; position: relative; }
+        .key { width: 40px; height: 120px; margin: 2px; background: orange; color: black; border: 1px solid black; display: inline-block; text-align: center; line-height: 120px; cursor: pointer; }
+        .black-key { width: 30px; height: 80px; background: blue; color: white; position: absolute; z-index: 2; margin-left: -15px; }
+    </style>
+</head>
+<body>
+    <h1>808 Drum Machine & Synth</h1>
+    
+    <div class="container">
+        <h2>Synth</h2>
+        <div class="keyboard" id="keyboard"></div>
+        <br>
+        <label>Pitch Bend</label>
+        <input type="range" id="pitchBend" min="-1200" max="1200" step="10" value="0" oninput="updatePitch()">
+        <br>
+        <button onclick="toggleArpeggiator()" id="arpeggiatorButton">Arpeggiator Off</button>
+    </div>
+
+    <script>
+        const synth = new Tone.Synth().toDestination();
+        let arpeggiatorOn = false;
+        let selectedNotes = [];
+        let arpeggiatorLoop;
+
+        function playNote(note) {
+            if (!selectedNotes.includes(note)) {
+                selectedNotes.push(note);
+            }
+            synth.triggerAttackRelease(note, "8n");
+        }
+
+        function createKeyboard() {
+            const keyboard = document.getElementById("keyboard");
+            const notes = ["C4", "C#4", "D4", "D#4", "E4", "F4", "F#4", "G4", "G#4", "A4", "A#4", "B4", "C5"];
+            const whiteNotes = ["C", "D", "E", "F", "G", "A", "B"];
+            let xPos = 0;
+            
+            notes.forEach(note => {
+                const key = document.createElement("div");
+                key.innerText = note;
+                key.onclick = () => playNote(note);
+                
+                if (note.includes("#")) {
+                    key.className = "key black-key";
+                    key.style.left = `${xPos * 42 - 15}px`;
+                } else {
+                    key.className = "key";
+                    xPos++;
+                }
+                
+                keyboard.appendChild(key);
+            });
+        }
+
+        function toggleArpeggiator() {
+            arpeggiatorOn = !arpeggiatorOn;
+            const button = document.getElementById("arpeggiatorButton");
+            if (arpeggiatorOn) {
+                button.innerText = "Arpeggiator On";
+                button.classList.add("button-on");
+                startArpeggiator();
+            } else {
+                button.innerText = "Arpeggiator Off";
+                button.classList.remove("button-on");
+                stopArpeggiator();
+            }
+        }
+
+        function startArpeggiator() {
+            if (selectedNotes.length > 0) {
+                arpeggiatorLoop = new Tone.Loop(time => {
+                    const note = selectedNotes.shift();
+                    synth.triggerAttackRelease(note, "8n", time);
+                    selectedNotes.push(note);
+                }, "8n").start(0);
+                Tone.Transport.start();
+            }
+        }
+
+        function stopArpeggiator() {
+            if (arpeggiatorLoop) {
+                arpeggiatorLoop.stop();
+                Tone.Transport.stop();
+            }
+        }
+
+        createKeyboard();
+    </script>
+</body>
+</html>

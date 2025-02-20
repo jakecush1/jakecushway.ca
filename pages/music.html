@@ -1,0 +1,139 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>808 Drum Machine & Synth</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.36/Tone.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; background: #222; color: white; }
+        .container { margin: 20px auto; width: 80%; max-width: 900px; background: #333; padding: 20px; border-radius: 10px; box-shadow: 0px 0px 10px rgba(255,255,255,0.2); }
+        .step-grid { display: grid; grid-template-columns: repeat(16, 40px); gap: 5px; justify-content: center; }
+        .step { width: 40px; height: 40px; background: gray; border-radius: 5px; border: 1px solid white; cursor: pointer; }
+        .step.active { background: red; }
+        button { margin: 10px; padding: 10px 20px; font-size: 16px; border: none; border-radius: 5px; background: #ff5722; color: white; cursor: pointer; }
+        button:hover { background: #e64a19; }
+        input[type="range"] { width: 200px; margin-top: 10px; }
+        .keyboard { display: flex; justify-content: center; margin-top: 20px; }
+        .key { width: 40px; height: 120px; margin: 2px; background: white; color: black; border: 1px solid black; display: inline-block; position: relative; text-align: center; line-height: 120px; }
+    </style>
+</head>
+<body>
+    <h1>808 Drum Machine & Synth</h1>
+    
+    <div class="container">
+        <h2>808 Drum Machine</h2>
+        <div class="step-grid" id="stepGrid"></div>
+        <button onclick="toggleSequence()" id="playButton">Start</button>
+    </div>
+    
+    <div class="container">
+        <h2>Tempo</h2>
+        <input type="range" id="tempo" min="60" max="180" step="1" value="120" oninput="updateTempo()">
+        <span id="tempoValue">120 BPM</span>
+    </div>
+
+    <div class="container">
+        <h2>Synth</h2>
+        <div class="keyboard" id="keyboard"></div>
+        <br>
+        <label>Pitch Bend</label>
+        <input type="range" id="pitchBend" min="-1200" max="1200" step="10" value="0" oninput="updatePitch()">
+        <br>
+        <button onclick="toggleArpeggiator()" id="arpButton">Start Arpeggiator</button>
+    </div>
+
+    <script>
+        const steps = 16;
+        const drumPattern = { kick: Array(steps).fill(false), snare: Array(steps).fill(false), hihat: Array(steps).fill(false) };
+        const kick = new Tone.MembraneSynth().toDestination();
+        const snare = new Tone.NoiseSynth({ noise: { type: "white" }, envelope: { attack: 0.001, decay: 0.2, sustain: 0 } }).toDestination();
+        const hihat = new Tone.MetalSynth({ frequency: 200, envelope: { attack: 0.01, decay: 0.1, release: 0.1 }, harmonicity: 5 }).toDestination();
+        let playing = false;
+
+        function createGrid() {
+            const grid = document.getElementById("stepGrid");
+            grid.innerHTML = "";
+            ["kick", "snare", "hihat"].forEach(drum => {
+                for (let i = 0; i < steps; i++) {
+                    const button = document.createElement("div");
+                    button.classList.add("step");
+                    button.addEventListener("click", () => toggleStep(drum, i, button));
+                    grid.appendChild(button);
+                }
+            });
+        }
+
+        function toggleStep(drum, index, button) {
+            drumPattern[drum][index] = !drumPattern[drum][index];
+            button.classList.toggle("active");
+        }
+
+        let loop;
+        function toggleSequence() {
+            if (playing) {
+                Tone.Transport.stop();
+                playing = false;
+                document.getElementById("playButton").innerText = "Start";
+            } else {
+                Tone.Transport.stop();
+                Tone.Transport.cancel();
+                loop = new Tone.Sequence((time, step) => {
+                    if (drumPattern.kick[step]) kick.triggerAttackRelease("C2", "8n", time);
+                    if (drumPattern.snare[step]) snare.triggerAttackRelease("8n", time);
+                    if (drumPattern.hihat[step]) hihat.triggerAttackRelease("8n", time);
+                }, Array.from(Array(steps).keys()), "16n").start(0);
+                Tone.Transport.start();
+                playing = true;
+                document.getElementById("playButton").innerText = "Stop";
+            }
+        }
+
+        function updateTempo() {
+            let tempo = document.getElementById("tempo").value;
+            document.getElementById("tempoValue").innerText = tempo + " BPM";
+            Tone.Transport.bpm.value = tempo;
+        }
+
+        createGrid();
+
+        const synth = new Tone.Synth().toDestination();
+        function playNote(note) {
+            synth.triggerAttackRelease(note, "8n");
+        }
+
+        function createKeyboard() {
+            const keyboard = document.getElementById("keyboard");
+            const notes = ["C4", "D4", "E4", "F4", "G4", "A4", "B4", "C5"];
+            notes.forEach(note => {
+                const key = document.createElement("div");
+                key.className = "key";
+                key.innerText = note;
+                key.onclick = () => playNote(note);
+                keyboard.appendChild(key);
+            });
+        }
+
+        createKeyboard();
+
+        let arpeggiator;
+        let arpeggiatorActive = false;
+        function toggleArpeggiator() {
+            if (arpeggiatorActive) {
+                arpeggiator.stop();
+                arpeggiatorActive = false;
+                document.getElementById("arpButton").innerText = "Start Arpeggiator";
+            } else {
+                arpeggiator = new Tone.Pattern((time, note) => {
+                    synth.triggerAttackRelease(note, "8n", time);
+                }, ["C4", "E4", "G4", "B4"], "up").start(0);
+                Tone.Transport.start();
+                arpeggiatorActive = true;
+                document.getElementById("arpButton").innerText = "Stop Arpeggiator";
+            }
+        }
+    </script>
+</body>
+</html>

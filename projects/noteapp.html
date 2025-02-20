@@ -4,184 +4,166 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Note App</title>
 </head>
 <body>
   <div class="original">
-    <button onclick=store()>Store Info</button>
-    <button onclick=readAllData()>Print all Notes</button>
-    <input id="name" type=text placeholder="Enter Name">
-    <textarea id="note" type=text placeholder="Enter Note"></textarea>
+    <button onclick="store()">Store Info</button>
+    <button onclick="readAllData()">Print all Notes</button>
+    <input id="name" type="text" placeholder="Enter Name">
+    <textarea id="note" placeholder="Enter Note"></textarea>
   </div>
+
+  <style>
+    .original {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      padding: 1rem;
+      width: 95%;
+      margin: 0 auto;
+    }
+
+    .original button {
+      width: 40%;
+      padding: 0.5rem;
+      border: solid black 0.1rem;
+      margin: 0.2rem;
+    }
+
+    textarea, input {
+      width: 90%;
+      padding: 0.5rem;
+      border: solid black 0.1rem;
+      margin: 0.2rem;
+    }
+
+    body {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      background-color: coral;
+    }
+
+    .noteDiv {
+      border: solid black 0.2rem;
+      border-radius: 10%;
+      background-color: burlywood;
+      width: 27%;
+      text-align: center;
+      margin: 1rem;
+    }
+  </style>
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getFirestore, collection, getDocs, setDoc, doc, deleteDoc } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-firestore.js";
+
+    // Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyDHIqMAe-fJzhx3I_oRiH-0XyazMoAK95s",
+      authDomain: "jakehourslogger.firebaseapp.com",
+      projectId: "jakehourslogger",
+      storageBucket: "jakehourslogger.firebasestorage.app",
+      messagingSenderId: "396053531827",
+      appId: "1:396053531827:web:c9bf1e09880722a78334c6",
+      measurementId: "G-FSDQ50HLNY"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    let size = 0;
+
+    // Define the store function as async and attach to window object
+    window.store = async function() {
+      // Grab input data
+      const nameData = document.getElementById("name").value;
+      const noteData = document.getElementById("note").value;
+
+      // Only store if input not empty
+      if (nameData !== "" && noteData !== "") {
+        size++;
+        const noteI = `Note ${size}`;
+
+        // Clear input fields
+        document.getElementById("name").value = "";
+        document.getElementById("note").value = "";
+
+        // Create elements to display the note
+        const element = document.createElement('p');
+        const author = document.createElement("h1");
+        const newDiv = document.createElement("div");
+        newDiv.className = "noteDiv";
+        const deleteButton = document.createElement("button");
+
+        element.innerText = noteData;
+        author.innerText = nameData;
+        deleteButton.innerText = "Delete Note";
+
+        // Append elements to the page
+        document.body.appendChild(newDiv);
+        newDiv.appendChild(author);
+        newDiv.appendChild(element);
+        newDiv.appendChild(deleteButton);
+
+        // Add delete functionality
+        deleteButton.onclick = async function () {
+          newDiv.remove();
+          await deleteDoc(doc(db, "notes", noteI));
+          console.log("Note deleted");
+        };
+
+        // Store to Firestore
+        await setDoc(doc(db, "notes", noteI), {
+          name: nameData,
+          note: noteData,
+        }).then(() => {
+          alert("Note saved");
+          console.log("Document written successfully");
+        }).catch(() => {
+          alert("Error occurred, try again");
+          console.log("Unsuccessful");
+        });
+      } else {
+        alert("Please fill out both inputs");
+      }
+    };
+
+    // Define the readAllData function as async and attach to window object
+    window.readAllData = async function() {
+      const querySnapshot = await getDocs(collection(db, "notes"));
+      querySnapshot.forEach((doc) => {
+        const element = document.createElement('p');
+        const author = document.createElement("h1");
+        const newDiv = document.createElement("div");
+        newDiv.id = doc.id;
+        const noteId = doc.id;
+
+        newDiv.className = "noteDiv";
+        const deleteButton = document.createElement("button");
+
+        element.innerText = doc.data().note;
+        author.innerText = doc.data().name;
+        deleteButton.innerText = "Delete Note";
+
+        // Append elements to the page
+        document.body.appendChild(newDiv);
+        newDiv.appendChild(author);
+        newDiv.appendChild(element);
+        newDiv.appendChild(deleteButton);
+
+        // Delete note functionality
+        deleteButton.onclick = async function () {
+          newDiv.remove();
+          await deleteDoc(doc(db, "notes", noteId));
+          console.log("Note deleted");
+        };
+      });
+    };
+  </script>
 
 </body>
 </html>
-
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<style>
-  .original {
-    display:flex;
-    justify-content: center;
-    flex-wrap: wrap;
-    padding:1rem;
-    width:95%;
-    margin: 0 auto;
-  }
-  .original button {
-    width:40%;
-    padding:0.5rem;
-    border:solid black 0.1rem ;
-    margin:0.2rem;
-  }
-  textarea, input {
-    width:90%;
-    padding:0.5rem;
-    border:solid black 0.1rem ;
-    margin:0.2rem;
-
-  }
-body {
-  display:flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  background-color: coral;
-
-}
-  .noteDiv {
-    border:solid black 0.2rem;
-    border-radius: 10%;
-    background-color:burlywood;
-    width:27%;
-    text-align: center;
-    margin:1rem;
-  }
-</style>
-
-<script>
-firebase.initializeApp({ // this sets it up
- 
-    apiKey: "AIzaSyCjBHFEDpq7t2xgq4U6raSJG9yrBOrYIbg",
-    authDomain: "web104jake.firebaseapp.com",
-    projectId: "web104jake"
-});
-
-const db = firebase.firestore() // that initializes the database for usage
-db.collection("notes").get().then(doc => {
-  size = doc.size
-})
-
-note = "Note ";
-
-function store(){
-  //grab input data
-  nameData = document.getElementById("name").value;
-  noteData = document.getElementById("note").value;
-
-  //only store if input not empty
-  if (nameData != "" && noteData != ""){
-
-    size++;
-    noteI = note + size;
-
-    //empty input fields
-      document.getElementById("name").value = "";
-      document.getElementById("note").value = "";
-
-      //creates elements to write to page
-      let element = document.createElement('p');
-      let author = document.createElement("h1");
-      let newDiv = document.createElement("div");
-      newDiv.className = "noteDiv"
-      let deleteButton = document.createElement("button");
-
-      element.innerText = noteData;
-      author.innerText = nameData;
-      deleteButton.innerText = "Delete Note";
-
-      document.body.appendChild(newDiv);
-      newDiv.appendChild(author);
-      newDiv.appendChild(element)
-      newDiv.appendChild(deleteButton)
-
-      //add delete button
-      deleteButton.onclick = function(){
-        newDiv.remove()
-        db.collection("notes").doc(noteI).delete().then(() => {
-          alert("note deleted")
-          console.log("note has been deleted")
-      })
-    }
-
-    //store to the firestore
-    db.collection("notes").doc(noteI).set({
-      name: nameData,
-      note: noteData,
-    })
-
-    
-  
-    .then(()=>{
-      
-
-
-      alert("note saved")
-      console.log("document written successfully");
-    })
-    
-    .catch(()=>{
-      alert("Error occured, try again")
-      console.log("unsuccessful")
-  })
-}
-
-else {
-  alert("Please Fill out both inputs")
-}
-}
-
-//attached to the print all notes button
-function readAllData(){ //write stored notes to the webpage
-
-  let documents = db.collection("notes");
-  let docs = documents.get()
-
-  //grab each of the notes from the storage
-  .then(snapshot => {
-    snapshot.forEach(doc => {
-
-      //create elements to write to the page
-      let element = document.createElement('p');
-      let author = document.createElement("h1");
-      let newDiv = document.createElement("div");
-      newDiv.id = doc.id;
-      let noteId = doc.id;
-
-      newDiv.className = "noteDiv"
-      let deleteButton = document.createElement("button");
-
-      //gravving info from firestore
-      element.innerText = doc.data().note;
-      author.innerText = doc.data().name;
-      deleteButton.innerText = "Delete Note"
-
-      //keep each note inside a div
-      document.body.appendChild(newDiv);
-      newDiv.appendChild(author);
-      newDiv.appendChild(element)
-      newDiv.appendChild(deleteButton)
-
-      //delete div from page, and note from storage
-      deleteButton.onclick = function(){
-        newDiv.remove()
-        db.collection("notes").doc(noteId).delete().then(() => {
-          console.log("note has been deleted")
-      })
-    }
-      })
-    })
-
-  }
-
-
-</script>

@@ -11,6 +11,30 @@
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+      apiKey: "AIzaSyDHIqMAe-fJzhx3I_oRiH-0XyazMoAK95s",
+      authDomain: "jakehourslogger.firebaseapp.com",
+      projectId: "jakehourslogger",
+      storageBucket: "jakehourslogger.firebasestorage.app",
+      messagingSenderId: "396053531827",
+      appId: "1:396053531827:web:c9bf1e09880722a78334c6",
+      measurementId: "G-FSDQ50HLNY"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+  </script>
+  
 <script src="java.js"></script>
 
 <body>  
@@ -27,9 +51,10 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 <footer>
-    <a href="../final mockup/app_planning.html">App Planning</a>
-    <a href="../final mockup/Hours Tracker@2x.png">Flow Chart</a>
-    <a href="../final mockup/hours-mockup2.png">Mockup</a>
+    <br>
+    <a href="../workingfiles/hours-mockup2.png">App Overview</a>
+    <a href="../workingfiles/HoursTracker.png">Flow Chart</a>
+    <!-- <a href="../final mockup/hours-mockup2.png">Mockup</a> -->
 </footer>
 </body>
 

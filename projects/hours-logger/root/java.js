@@ -2,9 +2,9 @@
 //JAKE CUSHWAY
 
 firebase.initializeApp({
-    apiKey: "AIzaSyDAZwmphecrB2HrkV74YCFEnPAU2R4nw4o",
-    authDomain: "hours-log-app.firebaseapp.com",
-    projectId: "hours-log-app",
+    apiKey: "AIzaSyDHIqMAe-fJzhx3I_oRiH-0XyazMoAK95s",
+    authDomain: "jakehourslogger.firebaseapp.com",
+    projectId: "jakehourslogger",
 })
 
 const db = firebase.firestore()
@@ -50,8 +50,8 @@ function signInUser(){
     })
     .catch(()=>{
 
-        alert("Unsuccessful, create an account")
-        window.location.href = "index.html";
+        console.log("Unsuccessful, create an account")
+        // window.location.href = "index.html";
     })
 
 }
